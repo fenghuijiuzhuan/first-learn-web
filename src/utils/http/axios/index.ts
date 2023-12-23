@@ -45,8 +45,6 @@ const transform: AxiosTransform = {
 
   beforeRequestHook(config, options): CreateAxiosOptions {
     const { apiUrl, joinPrefix, joinParamsToUrl, formatDate, joinTime = true, urlPrefix } = options
-    console.log(config, options)
-
     config.url = config.url || ''
 
     if (joinPrefix && urlPrefix) {

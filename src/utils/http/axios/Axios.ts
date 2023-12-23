@@ -68,8 +68,6 @@ export class VAxios {
       this.axiosInstance.interceptors.request.use(undefined, requestInterceptorsCatch)
 
     this.axiosInstance.interceptors.response.use((res: AxiosResponse<any>) => {
-      console.log(res)
-
       res && axiosCanceler.removePending(res.config)
       if (responseInterceptors && isFunction(responseInterceptors)) {
         res = responseInterceptors(res)
