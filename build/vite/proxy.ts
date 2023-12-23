@@ -6,7 +6,7 @@ type ProxyTargetList = Record<string, ProxyOptions>
 type ProxyOptionFormator<T> = (proxyOptions: T) => T
 const httpsRE = /^https:\/\//
 
-export function createProxy(list: ProxyList = [], formater?: ProxyOptionFormator<ProxyOptions>) {
+export function createProxy(list: ProxyList = [], formator?: ProxyOptionFormator<ProxyOptions>) {
   const ret: ProxyTargetList = {}
   for (const [prefix, target] of list) {
     const isHttps = httpsRE.test(target)
@@ -18,8 +18,8 @@ export function createProxy(list: ProxyList = [], formater?: ProxyOptionFormator
       rewrite: (path) => path.replace(new RegExp(`^${prefix}`), ''),
       ...(isHttps ? { source: false } : {})
     }
-    if (isFunction) {
-      ret[prefix] = formater(ret[prefix])
+    if (isFunction(formator)) {
+      ret[prefix] = formator(ret[prefix])
     }
   }
   return ret
