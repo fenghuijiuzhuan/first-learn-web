@@ -1,5 +1,5 @@
 import type { ConfigEnv, UserConfig } from 'vite'
-import { defineConfig, loadEnv } from 'vite'
+import { defineConfig, loadEnv, ProxyOptions } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import glsl from 'vite-plugin-glsl'
 import { wrapperEnv } from './build/utils'
@@ -43,7 +43,12 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
     server: {
       host: true,
       port: VITE_PORT,
-      proxy: createProxy(VITE_PROXY)
+      proxy: createProxy(VITE_PROXY, (proxyOption: ProxyOptions, prefix) => {
+        if (prefix === '/api') {
+          proxyOption.rewrite = (path) => path.replace(new RegExp(`^${prefix}`), prefix)
+        }
+        return proxyOption
+      })
     },
     plugins: [vue(), glsl()]
   }

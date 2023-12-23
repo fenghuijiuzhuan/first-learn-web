@@ -3,7 +3,7 @@ import { ProxyOptions } from 'vite'
 
 type ProxyList = [string, string][]
 type ProxyTargetList = Record<string, ProxyOptions>
-type ProxyOptionFormator<T> = (proxyOptions: T) => T
+type ProxyOptionFormator<T extends ProxyOptions> = (proxyOptions: T, prefix: string) => T
 const httpsRE = /^https:\/\//
 
 export function createProxy(list: ProxyList = [], formator?: ProxyOptionFormator<ProxyOptions>) {
@@ -19,7 +19,7 @@ export function createProxy(list: ProxyList = [], formator?: ProxyOptionFormator
       ...(isHttps ? { source: false } : {})
     }
     if (isFunction(formator)) {
-      ret[prefix] = formator(ret[prefix])
+      ret[prefix] = formator(ret[prefix], prefix)
     }
   }
   return ret
