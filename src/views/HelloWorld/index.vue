@@ -29,7 +29,7 @@
   import { onMounted } from 'vue'
 
   async function getPersonById() {
-    const res = await getPerson('/1')
+    const res = await getPerson('/123')
     console.log(res)
   }
 
