@@ -25,13 +25,24 @@
 
 <script setup lang="ts">
   import { Col, Row } from 'ant-design-vue'
-  import { getPerson } from '../../api/demo'
+  import { getPersonById, queryPerson } from '../../api/demo'
   import { onMounted } from 'vue'
 
-  async function getPersonById() {
-    const res = await getPerson('/123')
+  async function getPerson() {
+    const res = await getPersonById('/123')
     console.log(res)
   }
 
-  onMounted(getPersonById)
+  async function queryPersonByPerson() {
+    const res = await queryPerson({
+      name: '嘎嘎嘎',
+      age: 21
+    })
+    console.log(res)
+  }
+
+  onMounted(() => {
+    getPerson()
+    queryPersonByPerson()
+  })
 </script>
