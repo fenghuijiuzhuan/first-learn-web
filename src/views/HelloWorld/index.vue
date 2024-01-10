@@ -21,14 +21,52 @@
     <Col :span="6" />
     <Col :span="6">
       <input ref="fileInput" type="file" />
+
+      <Input type="file" @input="inputFileUpload" />
+      <Input type="file" multiple @input="inputFilesUpload" />
     </Col>
   </Row>
 </template>
 
 <script setup lang="ts">
-  import { Col, Row } from 'ant-design-vue'
-  import { getPersonById, queryPerson, formUrl, json, formData } from '../../api/demo'
+  import { Col, Row, Input } from 'ant-design-vue'
+  import {
+    getPersonById,
+    queryPerson,
+    formUrl,
+    json,
+    formData,
+    uploadFile,
+    uploadFiles
+  } from '../../api/demo'
   import { onMounted, ref } from 'vue'
+  import { ChangeEvent } from 'ant-design-vue/es/_util/EventInterface'
+
+  // 上传文件批量
+  async function inputFilesUpload(e: ChangeEvent) {
+    const files: FileList = (e.target as any).files
+    const data = new FormData()
+    data.set('name', 'yvan')
+    data.set('age', '18')
+    Array.prototype.forEach.call(files, (item) => {
+      data.append('bbb', item)
+    })
+
+    const res = await uploadFiles(data)
+
+    console.log(res)
+  }
+  // 上传文件单个
+  async function inputFileUpload(e: ChangeEvent) {
+    const files: FileList = (e.target as any).files
+    const data = new FormData()
+    data.set('name', 'yvan')
+    data.set('age', '18')
+    data.set('aaa', files[0])
+    const res = await uploadFile(data)
+
+    console.log(res)
+  }
 
   async function sendUrlParam() {
     const res = await getPersonById('/123')

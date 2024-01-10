@@ -32,3 +32,25 @@ export const formData = (params) => {
     }
   })
 }
+
+// 单个上传
+export const uploadFile = (params) => {
+  return defHttp.post({
+    url: '/upload/aaa',
+    data: params,
+    headers: {
+      'Content-Type': ContentTypeEnum.FORM_DATA
+    }
+  })
+}
+
+// 批量上传
+export const uploadFiles = (params) => {
+  return defHttp.post({
+    url: '/upload/bbb',
+    params,
+    headers: {
+      'Content-Type': ContentTypeEnum.FORM_DATA
+    }
+  })
+}
