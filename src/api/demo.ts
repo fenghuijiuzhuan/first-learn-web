@@ -54,3 +54,47 @@ export const uploadFiles = (params) => {
     }
   })
 }
+
+// 批量上传多文件字段
+export const uploadFilesManyKey = (params) => {
+  return defHttp.post({
+    url: '/upload/ccc',
+    params,
+    headers: {
+      'Content-Type': ContentTypeEnum.FORM_DATA
+    }
+  })
+}
+
+// 批量上传任意文件字段
+export const uploadFilesAnyKey = (params) => {
+  return defHttp.post({
+    url: '/upload/ddd',
+    params,
+    headers: {
+      'Content-Type': ContentTypeEnum.FORM_DATA
+    }
+  })
+}
+
+// 批量上传任意文件字段
+export const uploadFilesAnyKeyStorage = (params) => {
+  return defHttp.post({
+    url: '/upload/eee',
+    params,
+    headers: {
+      'Content-Type': ContentTypeEnum.FORM_DATA
+    }
+  })
+}
+
+// 单个上传 后端限制10k
+export const uploadFileSize10k = (params) => {
+  return defHttp.post({
+    url: '/upload/eee',
+    data: params,
+    headers: {
+      'Content-Type': ContentTypeEnum.FORM_DATA
+    }
+  })
+}
