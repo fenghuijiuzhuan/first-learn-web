@@ -91,7 +91,29 @@ export const uploadFilesAnyKeyStorage = (params) => {
 // 单个上传 后端限制10k
 export const uploadFileSize10k = (params) => {
   return defHttp.post({
-    url: '/upload/eee',
+    url: '/upload/fff',
+    data: params,
+    headers: {
+      'Content-Type': ContentTypeEnum.FORM_DATA
+    }
+  })
+}
+
+// 单个上传 后端限制10k并且只能是png图片
+export const uploadFileSize10kPng = (params) => {
+  return defHttp.post({
+    url: '/upload/ggg',
+    data: params,
+    headers: {
+      'Content-Type': ContentTypeEnum.FORM_DATA
+    }
+  })
+}
+
+// 单个上传 后端限制10k2
+export const uploadFileSize10k2 = (params) => {
+  return defHttp.post({
+    url: '/upload/hhh',
     data: params,
     headers: {
       'Content-Type': ContentTypeEnum.FORM_DATA

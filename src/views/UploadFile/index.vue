@@ -42,6 +42,20 @@
       <Input type="file" multiple @input="inputFileUploadSize10k" />
     </Col>
   </Row>
+
+  <Row>
+    <Col :span="12" :order="2"> 上传文件单个 限制文件大小10k只能是png格式 </Col>
+    <Col :span="12" :order="1">
+      <Input type="file" multiple @input="inputFileUploadSize10kPng" />
+    </Col>
+  </Row>
+
+  <Row>
+    <Col :span="12" :order="2"> 上传文件单个 限制文件大小10k 后端自定义校验方法 </Col>
+    <Col :span="12" :order="1">
+      <Input type="file" multiple @input="inputFileUploadSize10k2" />
+    </Col>
+  </Row>
 </template>
 
 <script setup lang="ts">
@@ -52,9 +66,35 @@
     uploadFilesManyKey,
     uploadFilesAnyKey,
     uploadFilesAnyKeyStorage,
-    uploadFileSize10k
+    uploadFileSize10k,
+    uploadFileSize10kPng,
+    uploadFileSize10k2
   } from '../../api/demo'
   import { ChangeEvent } from 'ant-design-vue/es/_util/EventInterface'
+
+  // 上传文件单个 限制文件大小png 10k
+  async function inputFileUploadSize10k2(e: ChangeEvent) {
+    const files: FileList = (e.target as any).files
+    const data = new FormData()
+    data.set('name', 'yvan')
+    data.set('age', '18')
+    data.set('aaa', files[0])
+    const res = await uploadFileSize10k2(data)
+
+    console.log(res)
+  }
+
+  // 上传文件单个 限制文件大小png 10k
+  async function inputFileUploadSize10kPng(e: ChangeEvent) {
+    const files: FileList = (e.target as any).files
+    const data = new FormData()
+    data.set('name', 'yvan')
+    data.set('age', '18')
+    data.set('aaa', files[0])
+    const res = await uploadFileSize10kPng(data)
+
+    console.log(res)
+  }
 
   // 上传文件单个 限制文件大小
   async function inputFileUploadSize10k(e: ChangeEvent) {
