@@ -56,6 +56,13 @@
       <Input type="file" multiple @input="inputFileUploadSize10k2" />
     </Col>
   </Row>
+
+  <Row>
+    <Col :span="12" :order="2"> 大文件切片上传 </Col>
+    <Col :span="12" :order="1">
+      <Input type="file" multiple @input="inputUploadFilesSlice" />
+    </Col>
+  </Row>
 </template>
 
 <script setup lang="ts">
@@ -68,9 +75,36 @@
     uploadFilesAnyKeyStorage,
     uploadFileSize10k,
     uploadFileSize10kPng,
-    uploadFileSize10k2
+    uploadFileSize10k2,
+    uploadFilesSlice,
+    uploadFilesSliceMerge
   } from '../../api/demo'
   import { ChangeEvent } from 'ant-design-vue/es/_util/EventInterface'
+  //  大文件切片上传
+  async function inputUploadFilesSlice(e: ChangeEvent) {
+    const files: FileList = (e.target as any).files
+    const file = files[0]
+    console.log(file)
+    const chunks: Blob[] = []
+    const chunkSize = 20 * 1024
+    let startPos = 0
+    while (startPos < file.size) {
+      chunks.push(file.slice(startPos, startPos + chunkSize))
+      startPos += chunkSize
+    }
+
+    const randomStr = Math.random().toString().slice(2, 8)
+
+    const tasks: Array<Promise<any>> = []
+    chunks.map((chunk, index) => {
+      const data = new FormData()
+      data.set('name', randomStr + '_' + file.name + '-' + index)
+      data.append('files', chunk)
+      tasks.push(uploadFilesSlice(data))
+    })
+    await Promise.all(tasks)
+    uploadFilesSliceMerge({ name: randomStr + '_' + file.name })
+  }
 
   // 上传文件单个 限制文件大小png 10k
   async function inputFileUploadSize10k2(e: ChangeEvent) {

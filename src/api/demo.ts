@@ -120,3 +120,25 @@ export const uploadFileSize10k2 = (params) => {
     }
   })
 }
+
+// 大文件文件切片上传
+export const uploadFilesSlice = (params) => {
+  return defHttp.post({
+    url: '/upload/iii',
+    data: params,
+    headers: {
+      'Content-Type': ContentTypeEnum.FORM_DATA
+    }
+  })
+}
+
+// 大文件文件切片上传后合并
+export const uploadFilesSliceMerge = (params) => {
+  return defHttp.get({
+    url: '/upload/merge',
+    params,
+    headers: {
+      'Content-Type': ContentTypeEnum.FORM_DATA
+    }
+  })
+}
